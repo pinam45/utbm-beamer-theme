@@ -1,0 +1,85 @@
+%!TEX program = xelatex
+% not lualatex because of a pgf bug: https://sourceforge.net/p/pgf/bugs/384/
+\documentclass{beamer}
+%\documentclass[aspectratio=169]{beamer}
+\usepackage[T1]{fontenc}
+
+%----------------------------------------
+% Theme
+%----------------------------------------
+
+\usetheme{utbm}
+%\usetheme[illustration=cover]{utbm} % use cover.png/jpg/... for the title page
+
+%\useinnertheme[illustration=cover]{utbm}
+%\useoutertheme{utbm}
+%\usecolortheme{utbm}
+
+%----------------------------------------
+% Informations
+%----------------------------------------
+
+\title[Short title]{Long title}
+\subtitle{Subtitle}
+\author{Author}
+\institute[UTBM]{Université de Technologie de Belfort Montbéliard}
+
+\def\twodigits#1{\ifnum#1<10 0\fi\the#1}
+\date[\the\year-\twodigits\month-\twodigits\day]{\today}
+
+% PDF metadata informations
+\keywords{UTBM,keywords}
+\subject{Subject}
+
+%----------------------------------------
+% Document
+%----------------------------------------
+\begin{document}
+	\begin{frame}[plain,noframenumbering]
+		\titlepage
+	\end{frame}
+	\begin{frame}
+		\frametitle{Frame title}
+		\begin{block}{Block title}
+			Block text
+		\end{block}
+		Text
+		\begin{alertblock}{Alert block title}
+			Alert block text
+		\end{alertblock}
+		\alert{Alert text}
+	\end{frame}
+	\begin{frame}
+		\frametitle{Frame title}
+		\framesubtitle{Frame subtitle}
+		\begin{itemize}
+			\item level 1
+				\begin{itemize}
+					\item level 2
+						\begin{itemize}
+							\item level 3
+							\item<alert@1> level 3 (alert)
+							\item level 3
+						\end{itemize}
+					\item level 2
+					\item level 2
+				\end{itemize}
+			\item level 1
+			\item level 1
+		\end{itemize}
+	\end{frame}
+	\begin{frame}[plain,noframenumbering]
+		\utbmtitle{Title}
+	\end{frame}
+	\begin{frame}
+		Frame without title.
+		\begin{enumerate}
+			\item first
+			\item<alert@1> second (alert)
+			\item third
+		\end{enumerate}
+	\end{frame}
+	\begin{frame}[plain,noframenumbering]
+		\utbmclosingframe{Thanks}
+	\end{frame}
+\end{document}
