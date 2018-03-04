@@ -1,0 +1,388 @@
+% MIT License
+%
+% Copyright (c) 2018 Maxime Pinard
+%
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+%
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+
+% Illustration option
+\def\utbmillustration{utbm_default_illustration}
+\DeclareOptionBeamer{illustration}{\def\utbmillustration{#1}}
+\ProcessOptionsBeamer
+
+
+\mode<presentation>
+
+% Requirement
+\RequirePackage{fontspec}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+
+% Libraries
+\usetikzlibrary{decorations.pathreplacing}
+\usetikzlibrary{calc}
+\usetikzlibrary{shadows.blur}
+
+% Templates
+\setbeamertemplate{items}[square]{}
+\setbeamertemplate{blocks}[default]{}
+\setbeamertemplate{sections/subsections in toc}[square]{}
+
+% Fonts
+\setbeamerfont*{title}{size=\huge,series=\bfseries}
+\setbeamerfont*{subtitle}{size=\normalsize,series=\bfseries}
+\setbeamerfont*{author}{size=\scriptsize,series=\bfseries}
+\setbeamerfont*{date}{size=\tiny,series=\bfseries}
+\setbeamerfont*{closingframe}{size=\Large}
+
+% Size
+\setbeamersize{
+	text margin left=1.4cm,
+	text margin right=0.5cm
+}
+
+% Title frame command
+\newcommand{\utbmtitle}[2][]{
+	\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=1cm,
+		y=1cm,
+		outer sep=0,
+		inner sep=0,
+	]
+		%---------------------------------
+		% Background
+		\fill[
+			white,
+			opacity=1,
+			anchor=south west
+		] (current page.south west) rectangle(\the\paperwidth,\the\paperheight);
+
+		%---------------------------------
+		% Decorations
+		\usebeamercolor*{palette tertiary}
+		\draw[
+			decorate,
+			bg,
+			decoration={
+				border,
+				amplitude=1.875cm,
+				angle=315,
+				segment length=0.1266cm
+			},
+		] ($(current page.south west)+(8.28,-1.1)$) - - ($(current page.north west)+(8.28,0)$);
+
+		%---------------------------------
+		% Angle
+		\usebeamercolor*{palette primary}
+		\fill[bg] ($(current page.north west)+(7.54,-5.88)$) -- ++(1,1) -- ++(0,1) -- ++(-1,0) -- cycle;
+
+		%---------------------------------
+		% Main
+		\usebeamercolor*{palette secondary}
+		\node[
+			rectangle,
+			minimum width=8.28cm,
+			minimum height=\the\paperheight,
+			anchor=north west,
+			fill=bg,
+		] (main) at (current page.north west) {};
+
+		%---------------------------------
+		% Images
+		\node[
+			anchor=north west,
+		] (img1) at ($(main.north west)+(0,-0.79)$) {\includegraphics[width=2.76cm]{utbm_title_default_illustration1}};
+		\node[
+			anchor=north west,
+		] (img1) at ($(main.north west)+(2.76,-0.79)$) {\includegraphics[width=2.76cm]{utbm_title_default_illustration2}};
+		\node[
+			anchor=north west,
+		] (img1) at ($(main.north west)+(5.52,-0.79)$) {\includegraphics[width=2.76cm]{utbm_title_default_illustration3}};
+
+		%---------------------------------
+		% Headline
+		\usebeamercolor*{headline}
+		\node[
+			rectangle,
+			minimum width=8.541cm,
+			minimum height=0.35cm,
+			fill=bg,
+			anchor=north west,
+		] (headline) at ($(main.north west)-(0,2.85)$) {};
+		\node[
+			anchor=west,
+			inner sep=0.355cm,
+			yshift=0.015cm
+		] at (headline.west) {\includegraphics[width=4.65cm]{utbm_name}};
+
+		%---------------------------------
+		% Title
+		\usebeamercolor*{palette primary}
+		\node[
+			rectangle,
+			minimum width=8.541cm,
+			minimum height=1.68cm,
+			fill=bg,
+			anchor=north west,
+			blur shadow={%
+				shadow blur steps=10,
+				shadow blur extra rounding=0.2cm,
+				shadow xshift=-0.1cm,
+				shadow yshift=-0.08cm,
+			}
+		] (title) at (headline.south west) {};
+		\node[
+			anchor=west,
+			fg,
+			font=\usebeamerfont{frametitle},
+			align=left,
+			inner sep=0.3cm,
+			text width=7.95cm,
+		] at (title.west) {#2};
+
+		%---------------------------------
+		% Text
+		\usebeamercolor*{palette secondary}
+		\node[
+			anchor=west,
+			fg,
+			font=\usebeamerfont{framesubtitle},
+			align=left,
+			inner sep=0.35cm,
+			text width=7.57cm,
+		] at ($(main.north west)+(0,-5.6)$) {#1};
+
+		%---------------------------------
+		% Footline
+		\usebeamercolor*{footline}
+		\node[
+			rectangle,
+			minimum width=\the\paperwidth,
+			minimum height=0.35cm,
+			fill=bg,
+			anchor=south west,
+		] (footline) at (current page.south west) {};
+		\node[
+			anchor=east,
+			fg,
+		] at ($(footline.east)-(0.34,0)$) {\includegraphics[width=0.95cm]{utbm_logo2}};
+
+		%---------------------------------
+		% Footline title
+		\usebeamercolor*{title in head/foot}
+		\node[
+			anchor=west,
+			fg,
+			font=\usebeamerfont{title in head/foot},
+		] at ($(footline.west)+(0.33,0)$) {\insertshorttitle};
+
+		%---------------------------------
+		% Footline date
+		\usebeamercolor*{date in head/foot}
+		\node[
+			anchor=east,
+			fg,
+			font=\usebeamerfont{date in head/foot},
+		] at ($(footline.east)-(1.7,0)$) {\insertshortdate};
+	\end{tikzpicture}
+}
+
+% Closing frame command
+\newcommand{\utbmclosingframe}[1]{
+	\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=1cm,
+		y=1cm,
+		outer sep=0,
+		inner sep=0,
+	]
+		%---------------------------------
+		% Background
+		\fill[
+			white,
+			opacity=1,
+			anchor=south west
+		] (current page.south west) rectangle(\the\paperwidth,\the\paperheight);
+		\node[
+			anchor=north
+		] (backgroundimage) at (current page.north) {\includegraphics[height=\the\paperheight]{utbm_closing_frame_background}};
+
+		%---------------------------------
+		% Text
+		\coordinate (A) at (backgroundimage.north west);
+		\begin{scope}[
+			x={($(backgroundimage.north east)-(A)$)},
+			y={($(backgroundimage.south west)-(A)$)},
+		]
+			\node[
+				anchor=north west,
+				text width=4.5cm,
+				minimum height=4.8cm,
+				inner sep=0.1cm,
+				align=center,
+				font=\usebeamerfont{closingframe},
+			] at ($(A)+(0.078,0.335)$) {#1};
+		\end{scope}
+	\end{tikzpicture}
+}
+
+% Background
+\setbeamertemplate{background}{
+	\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=1cm,
+		y=1cm,
+		outer sep=0,
+		inner sep=0,
+	]
+		%---------------------------------
+		% Background
+		\fill[
+			white,
+			opacity=1,
+			anchor=south west
+		] (current page.south west) rectangle(\the\paperwidth,\the\paperheight);
+
+		%---------------------------------
+		% Left decorations
+		\usebeamercolor*{palette tertiary}
+		\draw[
+			decorate,
+			bg,
+			decoration={
+				border,
+				amplitude=1.35cm,
+				angle=315,
+				segment length=0.1266cm
+			},
+		] ($(current page.south west)-(0,1.015)$) - - (current page.north west);
+	\end{tikzpicture}
+}
+
+% Title page
+\setbeamertemplate{title page}{
+	\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=1cm,
+		y=1cm,
+		outer sep=0,
+		inner sep=0,
+	]
+		%---------------------------------
+		% Background
+		\fill[
+			white,
+			opacity=1,
+			anchor=south west
+		] (current page.south west) rectangle(\the\paperwidth,\the\paperheight);
+
+		%---------------------------------
+		% Cover
+		\node[
+			anchor=north west
+		] at (current page.north west) {\includegraphics[width=\the\paperwidth]{\utbmillustration}};
+
+		%---------------------------------
+		% Headline
+		\usebeamercolor*{headline}
+		\node[
+			rectangle,
+			minimum width=\the\paperwidth,
+			minimum height=0.35cm,
+			fill=bg,
+			anchor=north,
+		] (headline) at ($(current page.north)-(0,5.142)$) {};
+		\node[
+			anchor=west,
+			inner sep=0.355cm,
+			yshift=0.015cm
+		] at (headline.west) {\includegraphics[width=4.65cm]{utbm_name}};
+
+		%---------------------------------
+		% Title
+		\usebeamercolor*{title}
+		\node[
+			rectangle,
+			minimum width=\the\paperwidth,
+			minimum height=2.625cm,
+			fill=bg,
+			anchor=north,
+		] (main) at (headline.south) {};
+		\ifx\insertsubtitle\@empty{
+			\node[
+				anchor=north,
+				fg,
+				font=\usebeamerfont{title},
+				align=left,
+				minimum height=2.08cm,
+				text width=\the\paperwidth-2*0.4cm,
+			] (title) at (main.north) {\inserttitle};
+		}
+		\else{
+			\node[
+				anchor=north,
+				fg,
+				font=\usebeamerfont{title},
+				align=left,
+				minimum height=2.08cm,
+				text width=\the\paperwidth-2*0.4cm,
+			] (title) at (main.north) {\inserttitle\\\usebeamerfont{subtitle}\usebeamercolor[fg]{subtitle}\insertsubtitle};
+		}
+		\fi
+
+		%---------------------------------
+		% Author
+		\usebeamercolor*{author}
+		\node[
+			anchor=north west,
+			fg,
+			font=\usebeamerfont{author},
+			align=left,
+			minimum height=0.55cm,
+			text width=\the\paperwidth-2*0.4cm,
+		] (author) at (title.south west) {\insertauthor};
+
+		%---------------------------------
+		% Footer
+		\usebeamercolor*{palette secondary}
+		\fill[bg] (main.south west) rectangle (current page.south east);
+
+		%---------------------------------
+		% Date
+		\usebeamercolor*{date}
+		\node[
+			anchor=south east,
+			fg,
+			font=\usebeamerfont{date},
+			inner sep=0.09cm,
+			minimum height=0.2cm,
+		] (date) at (current page.south east) {\insertdate};
+	\end{tikzpicture}
+}
+
+% Title page
+\defbeamertemplate*{part page}{utbm}[1][]{
+	\utbmtitle{\insertpart}
+}
+
+\mode<all>

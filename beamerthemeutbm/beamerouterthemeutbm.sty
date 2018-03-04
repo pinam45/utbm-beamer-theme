@@ -1,0 +1,191 @@
+% MIT License
+%
+% Copyright (c) 2018 Maxime Pinard
+%
+% Permission is hereby granted, free of charge, to any person obtaining a copy
+% of this software and associated documentation files (the "Software"), to deal
+% in the Software without restriction, including without limitation the rights
+% to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+% copies of the Software, and to permit persons to whom the Software is
+% furnished to do so, subject to the following conditions:
+%
+% The above copyright notice and this permission notice shall be included in all
+% copies or substantial portions of the Software.
+%
+% THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+% IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+% FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+% AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+% LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+% OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+% SOFTWARE.
+
+\mode<presentation>
+
+% Requirement
+\RequirePackage{fontspec}
+\RequirePackage{xcolor}
+\RequirePackage{tikz}
+
+% Libraries
+\usetikzlibrary{calc}
+
+% Fonts
+\setbeamerfont*{page number in head/foot}{size=\tiny}
+\setbeamerfont*{title in head/foot}{size=\tiny}
+\setbeamerfont*{date in head/foot}{size=\tiny}
+\setbeamerfont*{frametitle}{size=\Large,series=\bfseries}
+\setbeamerfont*{framesubtitle}{size=\small,series=\bfseries}
+
+% Headline
+\defbeamertemplate*{headline}{utbm}[1][]
+{
+	\begin{beamercolorbox}[wd=\paperwidth,ht=0.35cm]{headline}% for size computation
+  	\end{beamercolorbox}%
+	\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=1cm,
+		y=1cm,
+		outer sep=0,
+		inner sep=0,
+	]
+		%---------------------------------
+		% Headline
+		\usebeamercolor*{headline}
+		\node[
+			rectangle,
+			minimum width=\the\paperwidth,
+			minimum height=0.35cm,
+			fill=bg,
+			anchor=north,
+		] (headline) at (current page.north) {};
+		\node[
+			anchor=west,
+			inner sep=0.355cm,
+			yshift=0.015cm
+		] at (headline.west) {\includegraphics[width=4.65cm]{utbm_name}};
+	\end{tikzpicture}
+}
+
+% Footline
+\defbeamertemplate*{footline}{utbm}[1][]
+{
+	\begin{beamercolorbox}[wd=\paperwidth,ht=0.35cm]{footline}% for size computation
+  	\end{beamercolorbox}%
+	\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=1cm,
+		y=1cm,
+		outer sep=0,
+		inner sep=0,
+	]
+		%---------------------------------
+		% Footline
+		\usebeamercolor*{footline}
+		\node[
+			rectangle,
+			minimum width=\the\paperwidth,
+			minimum height=0.35cm,
+			fill=bg,
+			anchor=south west,
+		] (footline) at (current page.south west) {};
+		\node[
+			anchor=east,
+			fg,
+		] at ($(footline.east)-(0.34,0)$) {\includegraphics[width=0.95cm]{utbm_logo2}};
+
+		%---------------------------------
+		% Page number
+		\usebeamercolor*{page number in head/foot}
+		\node[
+			anchor=west,
+			text width=0.95cm,
+			text centered,
+			fg,
+			font=\usebeamerfont{page number in head/foot},
+		] (pagenumber) at (footline.west) {\insertframenumber};
+
+		%---------------------------------
+		% Title
+		\usebeamercolor*{title in head/foot}
+		\node[
+			anchor=west,
+			fg,
+			font=\usebeamerfont{title in head/foot},
+		] at (pagenumber.east) {\insertshorttitle};
+
+		%---------------------------------
+		% Date
+		\usebeamercolor*{date in head/foot}
+		\node[
+			anchor=east,
+			fg,
+			font=\usebeamerfont{date in head/foot},
+		] at ($(footline.east)-(1.7,0)$) {\insertshortdate};
+	\end{tikzpicture}
+}
+
+% Frame title
+\defbeamertemplate*{frametitle}{utbm}[1][]
+{
+	\begin{beamercolorbox}[wd=\paperwidth,ht=0.35cm]{frametitle}% for size computation
+  	\end{beamercolorbox}%
+	\begin{tikzpicture}[
+		remember picture,
+		overlay,
+		x=1cm,
+		y=1cm,
+		outer sep=0,
+		inner sep=0,
+	]
+		%---------------------------------
+		% Title & subtitle
+		\usebeamercolor*{frametitle}
+		\node[
+			rectangle,
+			minimum width=\the\paperwidth,
+			minimum height=1.255cm,
+			fill=bg,
+			anchor=north west,
+		] (frametitle) at (current page.north west) {};
+		\ifx\insertframesubtitle\@empty{
+			\node[
+				anchor=west,
+				fg,
+				font=\usebeamerfont{frametitle},
+				align=left,
+				inner sep=0.355cm
+			] at (frametitle.west) {\insertframetitle};
+		}
+		\else{
+			\node[
+				anchor= west,
+				fg,
+				font=\usebeamerfont{frametitle},
+				align=left,
+				inner sep=0.355cm
+			] at (frametitle.west) {\insertframetitle\\[-0.2cm]\usebeamerfont{framesubtitle}\usebeamercolor[fg]{framesubtitle}\insertframesubtitle};
+		}
+		\fi
+
+		%---------------------------------
+		% Headline
+		\usebeamercolor*{headline}
+		\node[
+			rectangle,
+			minimum width=\the\paperwidth,
+			minimum height=0.35cm,
+			fill=bg,
+			anchor=north,
+		] (headline) at (frametitle.south) {};
+		\node[
+			anchor=west,
+			inner sep=0.355cm,
+			yshift=0.015cm
+		] at (headline.west) {\includegraphics[width=4.65cm]{utbm_name}};
+	\end{tikzpicture}
+}
+
+\mode<all>
