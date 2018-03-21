@@ -1,6 +1,6 @@
 # utbm-beamer-theme
 
-A LaTeX beamer version of the UTBM presentation theme using TikZ
+A LaTeX beamer version of the UTBM presentation theme using TikZ.
 
 You can preview the theme with the [compiled example](example.pdf).
 
@@ -45,7 +45,7 @@ Select the theme with:
 \usetheme{utbm}
 ```
 You can specify a illustration to use for the title page (``\titlepage``), example with the file *cover.png*:
-```
+```latex
 \usetheme[illustration=cover]{utbm}
 ```
 The *illustration* option use the ``\includegraphics`` syntax.
