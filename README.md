@@ -76,3 +76,7 @@ Clean:
 ```
 > make.cmd clean
 ```
+
+# Other resources
+
+[utbm-latex-internship-report-covers](https://github.com/pinam45/utbm-latex-internship-report-covers): A LaTeX version of the UTBM internship report covers using TikZ.
